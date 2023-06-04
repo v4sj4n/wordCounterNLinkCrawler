@@ -1,56 +1,34 @@
 import "./WordCounter.scss"
 import { useState } from "react"
+import { prepositionArray } from "../../prepositionArray"
 
 function WordCounter() {
-  const prepositionArray = [
-    "the",
-    "etc",
-    "of",
-    "but",
-    "so",
-    "in",
-    "to",
-    "per",
-    "as",
-    "till",
-    "on",
-    "a",
-    "an",
-    "for",
-    "our",
-    "mine",
-    "yours",
-    "his",
-    "hers",
-    "theirs",
-    "at",
-    "and",
-  ]
+  
   const [text, setText] = useState("")
   const [top10Frequency, setTop10Frequency] = useState([])
-
   const wordFormatter = (word) => {
     const formattedWord = word.toLowerCase().replace(/[^a-z0-9]+/gi, "")
     return formattedWord
   }
 
   const handleSubmit = () => {
-    if (!text) return "no words submited"
-    const separatedTextArray = text.split(" ")
+    if (!text.trim()) return "no words submitted"
+    const separatedTextArray = text.split(/\s+/)
     const frequency = {}
-    separatedTextArray.map((word) => {
+    separatedTextArray.forEach((word) => {
       const formattedWord = wordFormatter(word)
-      if (frequency[formattedWord]) frequency[formattedWord] += 1
-      else {
-        if (prepositionArray.includes(formattedWord)) return
-        frequency[formattedWord] = frequency[formattedWord] = 1
-      }
+      if (
+        formattedWord.length === 0 ||
+        prepositionArray.includes(formattedWord)
+      )
+        return
+      frequency[formattedWord] = (frequency[formattedWord] || 0) + 1
     })
     const sortedFrequency = Object.entries(frequency).sort(
       (a, b) => b[1] - a[1]
     )
     const top10Frequency = sortedFrequency.slice(0, 10)
-
+    console.log(top10Frequency)
     setTop10Frequency(top10Frequency)
   }
 
@@ -66,20 +44,19 @@ function WordCounter() {
         />
         <input type="button" value="submit" onClick={handleSubmit} />
       </div>
-      {top10Frequency && (
-          <>
-            <h2>results:</h2>
-            {top10Frequency === "no words submited" ? (
-              <p>Please put some words in the textarea</p>
-            ) : (
-              top10Frequency.map((el) => (
-                <p key={el[0]}>
-                  <span>{el[0]}</span> : {el[1]} time{el[1] > 1 ? "s" : ""}
-                </p>
-              ))
-            )}
-          </>
-        )}
+      {top10Frequency.length > 0 ? (
+        <>
+          <h2>results:</h2>
+
+          {top10Frequency.map((el) => (
+            <p key={el[0]}>
+              <span>{el[0]}</span> : {el[1]} time{el[1] > 1 ? "s" : ""}
+            </p>
+          ))}
+        </>
+      ) : (
+        <p>There are no words submitted</p>
+      )}
     </div>
   )
 }
