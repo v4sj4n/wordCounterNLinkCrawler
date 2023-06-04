@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-    <h1 className='main-title'>Word Counter N Link Crawler</h1>
+    <h1 className='main-title'>Word Counter & Link Crawler</h1>
     <div className='main-container'>
       <WordCounter />
       <LinkCrawler />
