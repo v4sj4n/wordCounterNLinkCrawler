@@ -1,0 +1,23 @@
+    .lc-container {
+
+        h2 {
+            text-align: center;
+            font-weight: 400;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+
+            input[type=text] {
+                margin-bottom: 1rem;
+            }
+
+            input[type=button] {
+                width: 200px;
+                margin: auto;
+                border-radius: 8px;
+                padding: 5px 10px;
+            }
+        }
+    }

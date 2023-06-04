@@ -1,11 +1,13 @@
-import "./LinkCrawler.css"
+import "./LinkCrawler.scss"
 
 function LinkCrawler() {
   return (
-    <div>
-      <h1>LinkCrawler</h1>
-      <input type="text" />
-      <input type="button" />
+    <div className="lc-container">
+      <h2>LinkCrawler</h2>
+      <div>
+        <input type="text" placeholder="Enter a link" />
+        <input type="button" value={"Find the links inside the page"} />
+      </div>
     </div>
   )
 }
